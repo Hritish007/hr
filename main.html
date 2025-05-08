@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="form-container mt-5 p-4 bg-white shadow rounded" style="max-width: 500px; margin: auto;">
+        <h2 class="text-center mb-4">Contact Us</h2>
+        <form action="submit.html" method="get" id="contactForm">
+    
+             <!-- Full Name -->
+             <div class="mb-3">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required>
+            </div>
+
+         <div>
+            <label>Gender:</label>
+             <input type="radio" id="male" name="gender" value="male">
+             <label for="male">Male</label>
+             <input type="radio" id="female" name="gender" value="female">
+             <label for="female">Female</label>
+             <input type="radio" id="other" name="gender" value="other">
+             <label for="Other">Other</label><br><br>
+         </div>
+
+            <!-- Address -->
+            <div class="mb-3">
+                <label for="Address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="Address" name="Address" placeholder="Address"required>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="text" class="form-control" id="email" name="email" placeholder="example@gmail.com" required>
+</div>
+        
+             <!-- Password Field -->
+<div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <div class="input-group">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter strong password" required>
+        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()">👁</button>
+</div><br>
+
+            <!-- Phone -->
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter 10 digits" required pattern="^\d{10}$" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+            </div>
+            
+            <!-- Graduation -->
+           <label for="graduation_date">Graduation Date:</label>
+<input type="date" id="graduation_date" name="graduation_date" required>
+<br><br>
+    
+            <!-- Select Service -->
+            <div class="mb-3">
+                <select class="form-select" id="service" name="service" required onchange="this.value==='other' ? otherService.style.display='block' : otherService.style.display='none'">
+
+                    <option value="" disabled selected>Choose a Service</option>
+                    <option value="web_development">Web Development</option>
+                    <option value="app_development">App Development</option>
+                    <option value="cloud_services">Cloud Services</option>
+                    <option value="cyber_security">Cyber Security</option>
+                    <option value="seo_marketing">Digital Marketing</option>
+                    <option value="other">Other</option>
+                </select>
+                <input type="text" class="form-control mt-2" id="otherService" name="otherService" placeholder="Enter your service" style="display: none;">
+
+            </div>
+
+             <!-- Upload -->
+             <!-- Upload Resume -->
+<label for="resume" class="tooltip">Upload Resume:
+    <span class="tooltiptext">Accepted file types: .pdf, .docx</span>
+</label>
+<input type="file" id="resume" name="resume" accept=".pdf,.docx">
+<div class="form-text">Accepted file types: .pdf, .docx</div><br>
+
+             
+            <!-- Budget Range -->
+            <div class="mb-3">
+                <label for="budget" class="form-label">Budget Range ($)</label>
+                <input type="range" class="form-range" id="budget" name="budget" min="1000" max="50000" step="500" value="25000" oninput="updateBudgetValue(this.value)">
+                <p>Estimated Budget: <strong><span id="budgetValue">$25000</span></strong></p>
+
+                
+                <!-- Reset Button -->
+                <input type="reset" value="Reset" onclick="resetBudget()">
+            </div>
+
+            <!-- Message -->
+            <div class="mb-3">
+                <label for="message" class="form-label">Your Message</label>
+                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Describe your project..." required></textarea>
+            </div>
+
+            <!-- Terms Checkbox -->
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="terms" onchange="toggleSubmitButton()">
+                <label class="form-check-label" for="terms">I agree to the <a href="terms.html">terms and conditions</a></label>
+            </div>
+
+            <!-- Submit Button (Initially Disabled) -->
+            <button type="submit" id="submitBtn" class="btn btn-primary w-100" disabled>Submit</button>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    function togglePassword() {
+        let passwordField = document.getElementById("password");
+        passwordField.type = passwordField.type === "password" ? "text" : "password";
+    }
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+        let password = document.getElementById("password").value;
+
+    });
+  // Function to update the budget value display
+  function updateBudgetValue(value) {
+        document.getElementById("budgetValue").textContent = "$" + value;
+    }
+
+    // Function to reset the budget value when reset button is clicked
+    function resetBudget() {
+        document.getElementById("budget").value = 25000;  // Reset slider to 25000
+        document.getElementById("budgetValue").textContent = "$25000";  // Reset displayed value
+
+        // Function to save form data to sessionStorage
+        function saveFormData() {
+        sessionStorage.setItem("name", document.getElementById("name").value);
+        sessionStorage.setItem("phone", document.getElementById("phone").value);
+        sessionStorage.setItem("email", document.getElementById("email").value);
+        sessionStorage.setItem("address", document.getElementById("Address").value);
+        sessionStorage.setItem("password", document.getElementById("password").value);
+        sessionStorage.setItem("graduation_date", document.getElementById("graduation_date").value);
+        sessionStorage.setItem("service", document.getElementById("service").value);
+        sessionStorage.setItem("otherService", document.getElementById("otherService").value);
+        sessionStorage.setItem("resume", document.getElementById("resume").value);
+        sessionStorage.setItem("budget", document.getElementById("budget").value);
+        sessionStorage.setItem("message", document.getElementById("message").value);
+    }
+
+    // Function to load form data from sessionStorage
+    function loadFormData() {
+        if (sessionStorage.getItem("name")) document.getElementById("name").value = sessionStorage.getItem("name");
+        if (sessionStorage.getItem("phone")) document.getElementById("phone").value = sessionStorage.getItem("phone");
+        if (sessionStorage.getItem("email")) document.getElementById("email").value = sessionStorage.getItem("email");
+        if (sessionStorage.getItem("address")) document.getElementById("Address").value = sessionStorage.getItem("address");
+        if (sessionStorage.getItem("graduation_date")) document.getElementById("graduation_date").value = sessionStorage.getItem("graduation_date");
+        if (sessionStorage.getItem("service")) document.getElementById("service").value = sessionStorage.getItem("service");
+        if (sessionStorage.getItem("otherService")) document.getElementById("otherService").value = sessionStorage.getItem("otherService");
+        if (sessionStorage.getItem("resume")) document.getElementById("resume").value = sessionStorage.getItem("resume");
+        if (sessionStorage.getItem("budget")) document.getElementById("budget").value = sessionStorage.getItem("budget");
+        if (sessionStorage.getItem("message")) document.getElementById("message").value = sessionStorage.getItem("message");
+    }
+    }
+    function toggleSubmitButton() {
+        let checkbox = document.getElementById("terms");
+        let submitButton = document.getElementById("submitBtn");
+        submitButton.disabled = !checkbox.checked; // Enable button only if checked
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
